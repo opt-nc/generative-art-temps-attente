@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Processing Example - OPT</title>
-    <link rel="stylesheet" type="text/css" href="master.css">
-    <script src="./p5.js"></script>
-    <script src="./agence.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/master.css">
+    <script src="js/p5.js"></script>
+    <script src="js/agence.js"></script>
+    <script src="js/moment-with-locales.js"></script>
 </head>
 <body>
     <script>
@@ -97,26 +98,18 @@
 
             fill(255);
             stroke(255);
-            textSize(64);
+            moment.locale("fr");
 
-            let hours = hour();
-            if(hours < 10){
-                hours = "0"+hour();
-            }
-
-            let minutes = minute();
-            if(minutes < 10){
-                minutes = "0"+minute();
-            }
-
-            let seconds = second();
-            if(seconds < 10){
-                seconds = "0"+second();
-            }
-
-            let time = hours + ":" + minutes + ":" + seconds;
-            text(time, -width/2.25, -height/3);
+            let date = moment().format("dddd").charAt(0).toUpperCase() + moment().format("dddd").slice(1);
+            date += " " + moment().format("Do") + " ";
+            date += moment().format("MMMM").charAt(0).toUpperCase() + moment().format("MMMM").slice(1);
             textSize(32);
+            text(date, -width/2.25, -height/3-70);
+
+            textSize(64);
+            let time = moment().format("HH:mm:ss");
+            text(time, -width/2.25, -height/3);
+            textSize(24);
             text("FPS: " + fps, -width/2.25, -height/3+50);
 
             pop();
