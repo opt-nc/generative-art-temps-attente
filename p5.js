@@ -26113,6 +26113,7 @@
                 var this$1 = this;
 
                 ctx.beginPath();
+                ctx.imageSmoothingEnabled = true;
                 for (var i = 0; i < this.commands.length; i += 1) {
                   var cmd = this$1.commands[i];
                   if (cmd.type === 'M') {
