@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Processing Example - OPT</title>
+    <link rel="stylesheet" type="text/css" href="master.css">
+    <script src="./p5.js"></script>
+    <script src="./agence.js"></script>
+</head>
+<body>
+    <script>
+        let data;
+        //let url = "http://localhost:8081/temps-attente/agences/";
+        let url = "http://localhost:8081/temps-attente/agences/noumea";
+        let fps = 0;
+
+        let slider;
+
+        let agences = [];
+        let waitingTimeArray = [];
+
+        function preload(){
+            loadJSON(url, gotData);
+        }
+
+        function gotData(json){
+            data = json;
+        }
+
+        function setup(){
+            frameRate(60);
+            createCanvas(windowWidth, windowHeight);
+
+            for(let i = 0; i < Object.keys(data).length; i++) {
+                waitingTimeArray.push(data[i].realMaxWaitingTimeMs);;
+            }
+
+            waitingTimeArray.sort();
+
+            let maxWaitingTime = waitingTimeArray[waitingTimeArray.length-1];
+
+            for(let i = 0; i < Object.keys(data).length; i++) {
+                agences.push(new Agence(i,
+                    data[i].idAgence,
+                    data[i].designation,
+                    data[i].realMaxWaitingTimeMs,
+                    maxWaitingTime));
+                print(agences[i]);
+            }
+
+            setInterval(updateAllAgencies, 30000)
+            setInterval(refreshFPS, 1000);
+
+            slider = createSlider(1, 200, 100);
+            slider.position(100, 300);
+            slider.style("width","300px");
+        }
+
+        function draw(){
+            clear();
+            showAllAgencies();
+            showDate();
+
+            push();
+            fill(255);
+            textSize(16);
+            text("Taille des trainées: " + slider.value() + " points", 100, 300);
+            pop();
+        }
+
+        function windowResized(){
+            resizeCanvas(windowWidth, windowHeight);
+        }
+
+        function showAllAgencies(){
+            for(let i = agences.length-1; i >= 0; i--){
+                agences[i].render(slider.value());
+            }
+        }
+
+        function updateAllAgencies(){
+            loadJSON(url, gotData);
+            for(let i = 0; i < Object.keys(data).length; i++) {
+                waitingTimeArray.push(data[i].realMaxWaitingTimeMs);;
+            }
+            waitingTimeArray.sort();
+
+            for(let i = 0; i < Object.keys(data).length; i++) {
+                agences[i].updateDatas(data[i].realMaxWaitingTimeMs, waitingTimeArray[waitingTimeArray.length-1]);
+            }
+        }
+
+        function showDate(){
+            push();
+
+            translate(width/2, height/2);
+
+            fill(255);
+            stroke(255);
+            textSize(64);
+
+            let hours = hour();
+            if(hours < 10){
+                hours = "0"+hour();
+            }
+
+            let minutes = minute();
+            if(minutes < 10){
+                minutes = "0"+minute();
+            }
+
+            let seconds = second();
+            if(seconds < 10){
+                seconds = "0"+second();
+            }
+
+            let time = hours + ":" + minutes + ":" + seconds;
+            text(time, -width/2.25, -height/3);
+            textSize(32);
+            text("FPS: " + fps, -width/2.25, -height/3+50);
+
+            pop();
+        }
+
+        function refreshFPS(){
+            fps = parseInt(frameRate());
+        }
+    </script>
+</body>
+</html>
