@@ -21,6 +21,7 @@ function Agence(pos, id, name, waitingTime, maxWaitingTime, sliderValue){
 
     this.renderDay = function(sliderValue){
         push();
+        this.size = this.fixedSize;
         translate(width/2, height/2);
 
         noStroke();
