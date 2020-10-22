@@ -20,6 +20,9 @@
         let agences = [];
         let waitingTimeArray = [];
 
+        let dayProgression;
+        let nightProgression;
+
         function preload(){
             loadJSON(url, gotData);
         }
@@ -52,8 +55,8 @@
             setInterval(updateAllAgencies, 30000)
             setInterval(refreshFPS, 1000);
 
-            slider = createSlider(1, 200, 100);
-            slider.position(100, 300);
+            slider = createSlider(1, 200, 20);
+            slider.position(120, 300);
             slider.style("width","300px");
         }
 
@@ -61,12 +64,8 @@
             clear();
             showAllAgencies();
             showDate();
-
-            push();
-            fill(255);
-            textSize(16);
-            text("Taille des trainées: " + slider.value() + " points", 100, 300);
-            pop();
+            showDayProgressionCircle();;
+            checkMouseOverAreas();
         }
 
         function windowResized(){
@@ -75,7 +74,11 @@
 
         function showAllAgencies(){
             for(let i = agences.length-1; i >= 0; i--){
-                agences[i].render(slider.value());
+                if(dayProgression < 0 || dayProgression > 100){
+                    agences[i].renderNight(slider.value());
+                } else {
+                    agences[i].renderDay(slider.value());
+                }
             }
         }
 
@@ -101,18 +104,131 @@
             moment.locale("fr");
 
             let date = moment().format("dddd").charAt(0).toUpperCase() + moment().format("dddd").slice(1);
-            date += " " + moment().format("Do") + " ";
-            date += moment().format("MMMM").charAt(0).toUpperCase() + moment().format("MMMM").slice(1);
+            date += " " + moment().format("Do") + " " + moment().format("MMMM");
+            //date += moment().format("MMMM").charAt(0).toUpperCase() + moment().format("MMMM").slice(1);
             textSize(32);
-            text(date, -width/2.25, -height/3-70);
+            text(date, -width/2.25+10, -height/3-80);
 
             textSize(64);
             let time = moment().format("HH:mm:ss");
             text(time, -width/2.25, -height/3);
             textSize(24);
-            text("FPS: " + fps, -width/2.25, -height/3+50);
+            text("FPS: " + fps, -width/2.25+10, -height/3+50);
 
             pop();
+        }
+
+        function showDayProgressionCircle(){
+            push();
+            dayProgression = getProgressionBetweenDates("073000","160000");
+            let morningProgression = getProgressionBetweenDates("073000","120000");
+            let breakProgression = getProgressionBetweenDates("120000","133000");
+            let noonProgression = getProgressionBetweenDates("133000","160000");
+            nightProgression = getProgressionBetweenDates("160000","235959") + map(getProgressionBetweenDates("000000","073000"), 0, 100, 100, 0, true);
+            nightProgression = map(nightProgression, 0, 200, 0, 100, true);
+
+            let percentToRad = PI/50;
+
+            noFill();
+            strokeWeight(12);
+            stroke(120,120,250);
+            arc(width-100,height-100,100,100,-PI/2,morningProgression*percentToRad-(PI/2));
+
+            stroke(100,120,210);
+            arc(width-100,height-100,80,80,-PI/2,breakProgression*percentToRad-(PI/2));
+
+            stroke(80,120,180);
+            arc(width-100,height-100,60,60,-PI/2,noonProgression*percentToRad-(PI/2));
+
+            fill(80,120,150);
+            noStroke();
+            arc(width-100,height-100,50,50,-PI/2,nightProgression*percentToRad-(PI/2));
+
+            pop();
+        }
+
+        function showDayProgressionText(){
+            push();
+            noStroke();
+            fill(255);
+            textSize(16);
+            textAlign(CENTER);
+            text("Progression",width-100, height-160);
+            text("Jour: " + dayProgression.toFixed(2)+"%", width-100, height-25);
+            text("Nuit: " + nightProgression.toFixed(2)+"%", width-100, height-5);
+            pop();
+        }
+
+        function getProgressionBetweenDates(date1, date2){
+            let start = moment(date1, "HHmmss").valueOf();
+            let end = moment(date2, "HHmmss").valueOf();
+            return map(moment().valueOf(), start, end, 0, 100, true);
+        }
+
+        function showSlider(){
+            push();
+            fill(255);
+            textSize(16);
+            text("Taille des trainées: " + slider.value() + " points", 120, 300);
+            pop();
+        }
+
+        function mouseInArea(x1, y1, x2, y2){
+            //print(mouseX, mouseY, x1, y1, x2, y2);
+            return x2 > mouseX && mouseX > x1 && y2 > mouseY && mouseY > y1;
+        }
+
+        function checkMouseOverAreas(){
+            push();
+            noFill();
+
+            /* TRAILS SETTINGS */
+            //rect(100,270,350,70);
+            slider.style("visibility","hidden");
+            if(mouseInArea(100, 270, 430, 360)){
+                showSlider();
+                slider.style("visibility","visible");
+            }
+
+            /* DAY PROGRESSION CIRCLE */
+            //rect(width-150, height-150, 100, 100);
+            if(mouseInArea(width-150, height-150, width-50, height-50)){
+                showDayProgressionText();
+            }
+
+            /* LEGEND */
+            if(mouseInArea(120, height-100, 420, height-50)){
+                showLegend();
+            }
+            pop();
+        }
+
+        function showLegend(){
+            let size = 300;
+            let xStart = 120;
+            let xEnd = xStart+size;
+
+            push();
+            noStroke();
+            fill(255);
+            textSize(16);
+            text("Temps d'attente", xStart-1, height-130);
+
+            textSize(12);
+            text("Rapide", xStart-1, height-110);
+            text("Long", xEnd-30, height-110);
+
+            noFill();
+            stroke(255);
+            strokeWeight(2);
+            rect(xStart-1, height-101, size+1, 52);
+            pop();
+            for(let i = xStart; i < xEnd; i++){
+                push();
+                stroke(map(i, xStart, xEnd, 150, 255, true), 0, 255);
+                line(i, height-100, i, height-50);
+                pop();
+            }
         }
 
         function refreshFPS(){
