@@ -79,13 +79,10 @@ function Agence(pos, id, name, waitingTime, maxWaitingTime, sliderValue){
         if(this.history.length > length){
             this.history.splice(0,abs(this.history.length-length));
         }
-
-        push();
-        fill(color, 0, 255, 100);
+;
         for(let i = this.history.length-1; i >= 0; i--){
             circle(this.history[i][0], this.history[i][1], map(i, length, 0, size, 0, true));
-        }
-        pop();
+        };
     }
 
     this.mouseOver = function(x, y){

@@ -107,25 +107,38 @@
             date += " " + moment().format("Do") + " " + moment().format("MMMM");
             //date += moment().format("MMMM").charAt(0).toUpperCase() + moment().format("MMMM").slice(1);
             textSize(32);
-            text(date, -width/2.25+10, -height/3-80);
+            text(date, -width/2.25+5, -height/3-80);
 
             textSize(64);
             let time = moment().format("HH:mm:ss");
             text(time, -width/2.25, -height/3);
             textSize(24);
-            text("FPS: " + fps, -width/2.25+10, -height/3+50);
+            text("FPS: " + fps, -width/2.25+5, -height/3+50);
 
             pop();
         }
 
         function showDayProgressionCircle(){
             push();
-            dayProgression = getProgressionBetweenDates("073000","160000");
-            let morningProgression = getProgressionBetweenDates("073000","120000");
-            let breakProgression = getProgressionBetweenDates("120000","133000");
-            let noonProgression = getProgressionBetweenDates("133000","160000");
-            nightProgression = getProgressionBetweenDates("160000","235959") + getProgressionBetweenDates("000000","073000");
-            nightProgression = map(nightProgression, 0, 200, 0, 100, true);
+
+            let globalProgression = getDayProgression();
+
+            dayProgression = map(globalProgression, 31.25, 66.67, 0, 100, true);
+            nightProgression = 0;
+            if(globalProgression > 66.67 || globalProgression < 31.25){
+                if(globalProgression > 0 && globalProgression < 31.25){
+                    nightProgression = 50 + map(globalProgression, 0, 31.25, 0, 50);
+                } else {
+                    nightProgression = map(globalProgression, 66.7, 100, 0, 50, true);
+                }
+            }
+
+            let morningProgression = map(globalProgression, 31.25, 50, 0, 100, true);
+            let breakProgression = map(globalProgression, 50, 56.2, 0, 100, true);
+            let noonProgression = map(globalProgression, 56.2, 66.67, 0, 100, true);
+            if(nightProgression > 0){
+                morningProgression = breakProgression = noonProgression = 100;
+            }
 
             let percentToRad = PI/50;
 
@@ -159,12 +172,10 @@
             pop();
         }
 
-        function getProgressionBetweenDates(date1, date2){
-            let start = moment(date1, "HHmmss").valueOf();
-            let end = moment(date2, "HHmmss").valueOf();
-            if(moment().valueOf() < start){
-                return 100;
-            }
+        function getDayProgression(){
+            let start = moment("000000", "HHmmss").valueOf();
+            let end = moment("235959", "HHmmss").valueOf();
+
             return map(moment().valueOf(), start, end, 0, 100, true);
         }
 

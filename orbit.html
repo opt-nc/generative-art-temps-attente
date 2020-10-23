@@ -25,6 +25,7 @@
         let nightProgression;
 
         function preload(){
+            p5.disableFriendlyErrors = true;
             loadJSON(url, gotData);
         }
 
@@ -33,7 +34,7 @@
         }
 
         function setup(){
-            frameRate(60);
+            frameRate(120);
             createCanvas(windowWidth, windowHeight);
 
             for(let i = 0; i < Object.keys(data).length; i++) {
@@ -224,26 +225,31 @@
         }
 
         function refreshFPS(){
-            fps = parseInt(frameRate());
-            fpsHistory.push(fps);
-            if(fpsHistory.length > 20){
+            if(fpsHistory.length > 17){
                 fpsHistory.splice(0,1);
             }
+
+            fps = parseInt(frameRate());
+            fpsHistory.push(fps);
         }
 
         function showFpsHistory(){
             push();
             noFill();
+            stroke(255);
             rect(110, 250, 330, 100);
-            for(let i = fpsHistory.length-2; i > 0; i--){
-                let x = 330/i;
-                let y = map(fpsHistory[i], 0, 60, 350, 250, true);
+            for(let i = fpsHistory.length-1; i > 1; i--){
+                let x = 65+i*(440/20);
+                let y = map(fpsHistory[i], 0, 120, 350, 250, true);
 
-                let prevX = 330/(i+1);
-                let prevY = map(fpsHistory[i+1], 0, 60, 350, 250, true);
+                let prevX = 65+(i+1)*(440/20);
+                let prevY = map(fpsHistory[i+1], 0, 120, 350, 250, true);
 
                 line(x, y, prevX, prevY);
             }
+
+            text("120", 110, 245);
+            text("0", 110, 365);
             pop();
         }
     </script>
