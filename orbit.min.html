@@ -74,7 +74,7 @@
 
         function showAllAgencies(){
             for(let i = agences.length-1; i >= 0; i--){
-                if(dayProgression === 100){
+                if(dayProgression === 0 || dayProgression === 100){
                     agences[i].renderNight(slider.value());
                 } else {
                     agences[i].renderDay(slider.value());
@@ -135,7 +135,7 @@
 
             let morningProgression = map(globalProgression, 31.25, 50, 0, 100, true);
             let breakProgression = map(globalProgression, 50, 56.2, 0, 100, true);
-            let noonProgression = map(globalProgression, 56.2, 66.67, 0, 100, true);
+            let noonProgression = map(globalProgression, 56.2, 66.7, 0, 100, true);
             if(nightProgression > 0){
                 morningProgression = breakProgression = noonProgression = 100;
             }

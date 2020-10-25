@@ -18,9 +18,15 @@ function Agence(pos, id, name, waitingTime, maxWaitingTime, sliderValue){
     this.color = map(this.waitingTime, 0, this.maxWaitingTime+10, 150, 255, true)+this.random
 
     this.history = [];
+    this.runOnce = false;
+    this.interval = null;
 
     this.renderDay = function(sliderValue){
         push();
+        this.runOnce = false;
+        if(this.interval != null){
+            clearInterval(this.interval);
+        }
         this.size = this.fixedSize;
         translate(width/2, height/2);
 
@@ -54,8 +60,13 @@ function Agence(pos, id, name, waitingTime, maxWaitingTime, sliderValue){
         let x = this.radius * cos(this.angle);
 
         this.showTrails(color, this.size, sliderValue);
-        this.history.splice(0,2);
         this.mouseOver(x, y);
+        if(!this.runOnce){;
+            this.runOnce = true;
+            this.interval = setInterval(() => {
+                this.deleteTrail();
+            }, 500);
+        }
 
         text(this.history,0,this.y+100);
 
@@ -67,6 +78,12 @@ function Agence(pos, id, name, waitingTime, maxWaitingTime, sliderValue){
             this.dir = 0.2;
         }
         pop();
+    }
+
+    this.deleteTrail = function(){
+        if(this.history.length > 0){
+            this.history.splice(0,1);
+        }
     }
 
     this.updateDatas = function(newWaitingTime, newMaxWaitingTime) {
