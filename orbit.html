@@ -14,6 +14,7 @@
         //let url = "http://localhost:8081/temps-attente/agences/";
         let url = "http://localhost:8081/temps-attente/agences/noumea";
         let fps = 0;
+        let fpsHistory = [];
 
         let slider;
 
@@ -24,6 +25,7 @@
         let nightProgression;
 
         function preload(){
+            p5.disableFriendlyErrors = true;
             loadJSON(url, gotData);
         }
 
@@ -32,7 +34,7 @@
         }
 
         function setup(){
-            frameRate(60);
+            frameRate(120);
             createCanvas(windowWidth, windowHeight);
 
             for(let i = 0; i < Object.keys(data).length; i++) {
@@ -40,7 +42,6 @@
             }
 
             waitingTimeArray.sort();
-
             let maxWaitingTime = waitingTimeArray[waitingTimeArray.length-1];
 
             for(let i = 0; i < Object.keys(data).length; i++) {
@@ -56,7 +57,7 @@
             setInterval(refreshFPS, 1000);
 
             slider = createSlider(1, 200, 20);
-            slider.position(120, 300);
+            slider.position(120, height-250);
             slider.style("width","300px");
         }
 
@@ -64,8 +65,11 @@
             clear();
             showAllAgencies();
             showDate();
+            showSlider();
             showDayProgressionCircle();
-            checkMouseOverAreas();
+            showDayProgressionText();
+            showLegend();
+            showFpsHistory();
         }
 
         function windowResized(){
@@ -183,38 +187,13 @@
             push();
             fill(255);
             textSize(16);
-            text("Taille des trainées: " + slider.value() + " points", 120, 300);
+            text("Taille des trainées: " + slider.value() + " points", 120, height-265);
             pop();
         }
 
         function mouseInArea(x1, y1, x2, y2){
             //print(mouseX, mouseY, x1, y1, x2, y2);
             return x2 > mouseX && mouseX > x1 && y2 > mouseY && mouseY > y1;
-        }
-
-        function checkMouseOverAreas(){
-            push();
-            noFill();
-
-            /* TRAILS SETTINGS */
-            //rect(100,270,350,70);
-            slider.style("visibility","hidden");
-            if(mouseInArea(100, 270, 430, 360)){
-                showSlider();
-                slider.style("visibility","visible");
-            }
-
-            /* DAY PROGRESSION CIRCLE */
-            //rect(width-150, height-150, 100, 100);
-            if(mouseInArea(width-150, height-150, width-50, height-50)){
-                showDayProgressionText();
-            }
-
-            /* LEGEND */
-            if(mouseInArea(120, height-100, 420, height-50)){
-                showLegend();
-            }
-            pop();
         }
 
         function showLegend(){
@@ -246,7 +225,32 @@
         }
 
         function refreshFPS(){
+            if(fpsHistory.length > 17){
+                fpsHistory.splice(0,1);
+            }
+
             fps = parseInt(frameRate());
+            fpsHistory.push(fps);
+        }
+
+        function showFpsHistory(){
+            push();
+            noFill();
+            stroke(255);
+            rect(110, 250, 330, 100);
+            for(let i = fpsHistory.length-1; i > 1; i--){
+                let x = 65+i*(440/20);
+                let y = map(fpsHistory[i], 0, 120, 350, 250, true);
+
+                let prevX = 65+(i+1)*(440/20);
+                let prevY = map(fpsHistory[i+1], 0, 120, 350, 250, true);
+
+                line(x, y, prevX, prevY);
+            }
+
+            text("120", 110, 245);
+            text("0", 110, 365);
+            pop();
         }
     </script>
 </body>
