@@ -19,6 +19,7 @@ docker pull nginx:alpine
 - Aller dans le fichier où se situe le répo. GitHub
 ```
 docker build -t orbit .
+docker run -d -p 8081:8081 rastadidi/opt-temps-attente-agences-api:latest 
 docker run -d -p 80:80 orbit
 ```
 
