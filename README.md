@@ -27,4 +27,4 @@ docker ps
 ## :fireworks: Pour accéder aux visualisations
 
 * <http://localhost>
-* <http://localhost/orbit.min.html> (Version allégée de metriques)
+* <http://localhost/orbit.min.html> (Version allégée de métriques)
