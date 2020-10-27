@@ -12,16 +12,20 @@ Ce projet utilise l'API REST des temps d'attente en agence OPT.nc <br>
 
 ## :gear: Setup du projet
 
+### Déploiement des images DockerHub
+```
+docker run --name opt-temps-attente-agences-viz-orbit -d -p 80:80 rastadidi/web-generative-art-temps-attente-opt
+docker run --name opt-temps-attente-agences-api -d -p 8081:8081 rastadidi/opt-temps-attente-agences-api
+docker ps
+```
 
+### Déploiement local du projet
 ```sh
 git clone https://github.com/adriens/web-generative-art-temps-attente-opt.git
 cd web-generative-art-temps-attente-opt
-```
-
-```sh
 docker build -t orbit .
-docker run --name opt-temps-attente-agences-api -d -p 8081:8081 rastadidi/opt-temps-attente-agences-api
 docker run --name opt-temps-attente-agences-viz-orbit -d -p 80:80 orbit
+docker run --name opt-temps-attente-agences-api -d -p 8081:8081 rastadidi/opt-temps-attente-agences-api
 docker ps
 ```
 
