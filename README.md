@@ -23,7 +23,7 @@ docker ps
 * <http://localhost/orbit.min.html> (Version allégée de métriques)
 
 
-## Pour les développeurs:
+## :sunglasses: Pour les développeurs
 ```sh
 git clone https://github.com/adriens/web-generative-art-temps-attente-opt.git
 cd web-generative-art-temps-attente-opt
