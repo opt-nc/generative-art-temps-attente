@@ -92,7 +92,7 @@ function Agence(pos, id, name, waitingTime, maxWaitingTime, sliderValue){
     }
 
     this.showTrails = function(color, size, sliderValue){
-        let length = sliderValue;
+        let length = sliderValue-(14-this.pos);
         if(this.history.length > length){
             this.history.splice(0,abs(this.history.length-length));
         }
