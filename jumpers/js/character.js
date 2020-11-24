@@ -23,7 +23,7 @@ function Character(x, name){
 
     this.jump = function(time){
         if(this.pos.y == height/4 - this.size/2){
-            this.vel.y = -5 - time/100000;
+            this.vel.y = -5 - time/600000;
         }
         if(this.pos.y == -height/2 + this.size/2){
             this.vel.y = 10;
@@ -35,11 +35,11 @@ function Character(x, name){
         let mx = mouseX;
         let my = mouseY - height/2;
 
-        if(dist(mx, my, this.pos.x, my) < this.size){
-            fill(255);
+        if(dist(mx, my, this.pos.x, my) < this.size/3){
+            fill(0);
             textSize(16);
             textAlign(CENTER);
-            text(this.name, this.pos.x, height/3);
+            text(this.name, this.pos.x, height/3 - 40);
         }
         pop();
     }

@@ -1,12 +1,14 @@
 let url = "http://localhost:8081/temps-attente/agences/noumea";
 let data;
 let chars = [];
-let img;
+let bg;
+let logo;
 
 function preload(){
     p5.disableFriendlyErrors = true;
     loadJSON(url, gotData);
-    img = loadImage("img/background.jpg");
+    bg = loadImage("img/background.jpg");
+    logo = loadImage("img/logo_opt.png");
 }
 
 function gotData(json){
@@ -29,12 +31,13 @@ function setup(){
 
 function draw(){
     clear();
-    image(img, 0, 0);
+    image(bg, 0, 0);
     translate(0, height/2);
 
     rectMode(CORNERS);
-    fill(60, 50, 40);
+    fill(255);
     rect(0, height/4, width, height);
+    image(logo, width - logo.width/3 - 10, height/3, logo.width/3, logo.height/3)
 
     for(var i = 0; i < chars.length; i++){
         chars[i].show(data[i].realMaxWaitingTimeMs);
