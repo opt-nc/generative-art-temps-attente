@@ -27,7 +27,7 @@ function setup(){
     x = step/2;
 
     for(var i = 0; i < data.length; i++){
-        chars.push(new Character(x, data[i].designation));
+        chars.push(new Character(x, data[i].designation, data[i].realMaxWaitingTimeMs));
         x += step;
     }
 
@@ -46,9 +46,9 @@ function draw(){
     showGroung();
 
     for(var i = 0; i < chars.length; i++){
-        chars[i].show(data[i].realMaxWaitingTimeMs);
+        chars[i].show();
         chars[i].update();
-        chars[i].jump(data[i].realMaxWaitingTimeMs);
+        chars[i].jump();
     }
 }
 
