@@ -12,7 +12,7 @@ Ce projet utilise l'API REST des temps d'attente en agence OPT.nc <br>
 
 ## :gear: Setup du projet
 ```
-docker run --name opt-temps-attente-agences-viz-orbit -d -p 80:80 rastadidi/web-generative-art-temps-attente-opt
+docker run --name opt-temps-attente-agences-viz -d -p 80:80 rastadidi/web-generative-art-temps-attente-opt
 docker run --name opt-temps-attente-agences-api -d -p 8081:8081 rastadidi/opt-temps-attente-agences-api
 docker ps
 ```
@@ -21,6 +21,7 @@ docker ps
 
 * <http://localhost>
 * <http://localhost/orbit.min.html> (Version allégée de métriques)
+* <http://localhost/jumpers.html>
 
 
 ## :sunglasses: Pour les développeurs
