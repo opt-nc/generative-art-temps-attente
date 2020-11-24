@@ -1,22 +1,22 @@
-let url = "http://localhost:8081/temps-attente/agences/noumea";
-let data;
+let url = "http://localhost:8081/temps-attente/agences"; // API URL
+//let url = "http://localhost:8081/temps-attente/agences/noumea";
+let data = []; // DATA ARRAY
+let jumpers = []; // JUMPERS ARRAY
 
-let chars = [];
+let bg; // BACKGROUND IMAGE
+let logo; // OPT LOGO
 
-let bg;
-let logo;
-
-var fps = 0;
+var fps = 0; // FPS COUNT
 
 function preload(){
     p5.disableFriendlyErrors = true;
-    loadJSON(url, gotData);
-    bg = loadImage("img/space.jpg");
-    logo = loadImage("img/logo_opt.png");
+    loadJSON(url, gotData); // Load API json
+    bg = loadImage("img/space.jpg"); // Retrieve background picture
+    logo = loadImage("img/logo_opt.png"); // Retrieve logo picture
 }
 
 function gotData(json){
-    data = json;
+    data = json; // Callback assignment
 }
 
 function setup(){
@@ -24,35 +24,36 @@ function setup(){
     frameRate(144);
     
     var step = width / data.length;
-    x = step/2;
+    x = step/2; // Even the space between the dots
 
     for(var i = 0; i < data.length; i++){
-        chars.push(new Character(x, data[i].designation));
+        jumpers.push(new Jumper(x, data[i].designation));
         x += step;
     }
 
-    setInterval(updateJson, 60000);
-    setInterval(refreshFPS, 1000);
+    setInterval(updateJson, 60000); // Refresh the json by calling the API every minutes
+    setInterval(refreshFPS, 1000);  // Refresh the FPS count every seconds
 }
 
 function draw(){
     clear();
     
-    image(bg, 0, 0);
-    translate(0, height/2);
+    image(bg, 0, 0); // Show background picture
+    translate(0, height/2); // Center the origin (0,0) in the middle left side of the screen
 
     showDate();
     showLogo();
     showGroung();
 
-    for(var i = 0; i < chars.length; i++){
-        chars[i].show(data[i].realMaxWaitingTimeMs);
-        chars[i].update();
-        chars[i].jump(data[i].realMaxWaitingTimeMs);
+    // Update jumpers
+    for(var i = 0; i < jumpers.length; i++){
+        jumpers[i].show(data[i].realMaxWaitingTimeMs);
+        jumpers[i].update();
+        jumpers[i].jump(data[i].realMaxWaitingTimeMs);
     }
 }
 
-function windowResized(){
+function windowResized(){ // If window is resized
     resizeCanvas(windowWidth, windowHeight);
 }
 
@@ -73,7 +74,7 @@ function showGroung(){
     push();
     rectMode(CORNERS);
     noFill();
-    strokeWeight(2)
+    strokeWeight(5)
     rect(0, height/4, width, height);
     pop();
 }
@@ -87,7 +88,6 @@ function showDate(){
 
     let date = moment().format("dddd").charAt(0).toUpperCase() + moment().format("dddd").slice(1);
     date += " " + moment().format("Do") + " " + moment().format("MMMM");
-    //date += moment().format("MMMM").charAt(0).toUpperCase() + moment().format("MMMM").slice(1);
     textSize(32);
     text(date, -width/2.25+5, -height/3-80);
 

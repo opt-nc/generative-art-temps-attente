@@ -1,31 +1,32 @@
-function Character(x, name){
-    this.pos = createVector(x, height/2);
-    this.vel = createVector();
-    this.grav = 0.1;
-    this.fixedSize = 60;
-    this.deformation = 20;
-    
-    this.width = this.fixedSize;
+function Jumper(x, name){
+    this.pos = createVector(x, 0); // Position vector (x, y)
+    this.vel = createVector(0, 0); // Velocity vector (x, y) 
+    this.grav = 0.11; // Gravity setting
+    this.fixedSize = 30; // Size of the ball setting
+    this.width = this.fixedSize; 
     this.height = this.fixedSize;
-    this.name = name;
 
-
+    this.deformation = this.fixedSize/3; // Deformation when bouncing setting
+    
+    this.name = name; // Name of the ball
 
     this.show = function(time){
         push();
 
         colorMode(HSB, 255);
-        color = 80 - constrain(time / 10000, 0, 255);
+        color = 80 - constrain(time / 10000, 0, 255); // Change the color depending on the waiting time (Green to Red);
 
         stroke(color, 255, 180);
         strokeWeight(3);
         fill(color, 255, 255);
 
-        ellipse(this.pos.x, this.pos.y, this.width, this.height);
-        this.width -= 3;
-        this.height += 3;
+        ellipse(this.pos.x, this.pos.y, this.width, this.height); // Show the ball
+
+        this.width -= 3; // Cancel deformation
+        this.height += 3; // Cancel deformation
         this.width = constrain(this.width, this.fixedSize, this.fixedSize + this.deformation);
         this.height = constrain(this.height, this.fixedSize - this.deformation, this.fixedSize)
+
         this.mouseOver(time);
         pop();
     }
@@ -37,16 +38,22 @@ function Character(x, name){
     }
 
     this.jump = function(time){
-        if(this.pos.y == height/4 - this.height/2){
+        if(this.pos.y == height/4 - this.height/2){ // If the ball hits the ground
+
+            // Deform
             this.width += this.deformation;
             this.height -= this.deformation * 1.2;
 
-            this.vel.y = -5 - time/600000;
+            // Bounce!
+            this.vel.y = -7 - time/600000; 
         }
-        if(this.pos.y == -height/2 + this.height/2){
+        if(this.pos.y == -height/2 + this.height/2){ // If the ball hits the ceiling
+
+            // Deform
             this.width += this.deformation;
             this.height -= this.deformation;
 
+            // Bounce!
             this.vel.y = -this.vel.y;
         }
     }
@@ -56,7 +63,8 @@ function Character(x, name){
         let mx = mouseX;
         let my = mouseY - height/2;
 
-        if(dist(mx, my, this.pos.x, my) < this.height/3){
+        // Show the agency's name and waiting time if the mouse is located in the same column than the ball
+        if(dist(mx, my, this.pos.x, my) < this.height/3){ 
             fill(255);
             noStroke();
             textSize(16);
