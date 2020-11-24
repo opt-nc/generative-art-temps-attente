@@ -22,16 +22,16 @@ function gotData(json){
 function setup(){
     createCanvas(windowWidth, windowHeight);
     frameRate(144);
-
+    
     var step = width / data.length;
     x = step/2;
 
     for(var i = 0; i < data.length; i++){
-        chars.push(new Character(x, data[i].designation, data[i].realMaxWaitingTimeMs));
+        chars.push(new Character(x, data[i].designation));
         x += step;
     }
 
-    setInterval(updateJson, 30000);
+    setInterval(updateJson, 60000);
     setInterval(refreshFPS, 1000);
 }
 
@@ -46,9 +46,9 @@ function draw(){
     showGroung();
 
     for(var i = 0; i < chars.length; i++){
-        chars[i].show();
+        chars[i].show(data[i].realMaxWaitingTimeMs);
         chars[i].update();
-        chars[i].jump();
+        chars[i].jump(data[i].realMaxWaitingTimeMs);
     }
 }
 
