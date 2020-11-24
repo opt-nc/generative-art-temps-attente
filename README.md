@@ -19,9 +19,9 @@ docker ps
 
 ## :fireworks: Pour accéder aux visualisations
 
-* <http://localhost>
-* <http://localhost/orbit.min.html> (Version allégée de métriques)
-* <http://localhost/jumpers.html>
+* <http://127.0.0.1/>
+* <http://127.0.0.1/orbit.min.html> (Version allégée de métriques)
+* <http://127.0.0.1/jumpers.html>
 
 
 ## :sunglasses: Pour les développeurs
