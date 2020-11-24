@@ -10,12 +10,12 @@ function Agence(pos, id, name, waitingTime, maxWaitingTime, sliderValue){
     this.dir = 0.2;
 
     this.angle = 0;
-    this.speed = 0.01+random(0.01, 0.015);
+    this.speed = 0.015 + random(0,0.005) + map(this.waitingTime, 0, this.maxWaitingTime+1, 0, 0.01, true);
     this.savedSpeed = this.speed;
     this.radius = pos*this.size;
 
     this.random = random(-10,-5);
-    this.color = map(this.waitingTime, 0, this.maxWaitingTime+10, 150, 255, true)+this.random
+    this.color = map(this.waitingTime, 0, this.maxWaitingTime+1, 150, 255, true)+this.random
 
     this.history = [];
     this.runOnce = false;
@@ -89,6 +89,12 @@ function Agence(pos, id, name, waitingTime, maxWaitingTime, sliderValue){
     this.updateDatas = function(newWaitingTime, newMaxWaitingTime) {
         this.waitingTime = newWaitingTime;
         this.maxWaitingTime = newMaxWaitingTime;
+        
+        this.speed = 0.01 + map(this.waitingTime, 0, this.maxWaitingTime+1, 0, 0.01, true);
+        this.savedSpeed = this.speed;
+
+        this.random = random(-10,-5);
+        this.color = map(this.waitingTime, 0, this.maxWaitingTime+10, 150, 255, true)+this.random
     }
 
     this.showTrails = function(color, size, sliderValue){

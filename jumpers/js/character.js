@@ -9,6 +9,7 @@ function Character(x, name){
         push();
         colorMode(HSB, 255);
         color = 80 - constrain(time / 10000, 0, 255);
+        stroke(color, 255, 180);
         fill(color, 255, 255);
         ellipse(this.pos.x, this.pos.y, this.size, this.size);
         this.mouseOver(this.pos.x, this.pos.y);
@@ -26,7 +27,7 @@ function Character(x, name){
             this.vel.y = -5 - time/600000;
         }
         if(this.pos.y == -height/2 + this.size/2){
-            this.vel.y = 10;
+            this.vel.y = -this.vel.y;
         }
     }
 
@@ -36,10 +37,12 @@ function Character(x, name){
         let my = mouseY - height/2;
 
         if(dist(mx, my, this.pos.x, my) < this.size/3){
-            fill(0);
+            fill(255);
+            noStroke();
             textSize(16);
+            textStyle(BOLD);
             textAlign(CENTER);
-            text(this.name, this.pos.x, height/3 - 40);
+            text(this.name, this.pos.x, height/3 - 50);
         }
         pop();
     }

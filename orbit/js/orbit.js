@@ -40,7 +40,7 @@ let data;
                     maxWaitingTime));
             }
 
-            setInterval(updateAllAgencies, 30000)
+            setInterval(updateAllAgencies, 300000)
             setInterval(refreshFPS, 1000);
 
             slider = createSlider(1, 200, 20);
