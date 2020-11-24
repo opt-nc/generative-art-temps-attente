@@ -11,7 +11,7 @@ var fps = 0;
 function preload(){
     p5.disableFriendlyErrors = true;
     loadJSON(url, gotData);
-    bg = loadImage("img/background.jpg");
+    bg = loadImage("img/space.jpg");
     logo = loadImage("img/logo_opt.png");
 }
 
