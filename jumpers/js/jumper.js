@@ -33,8 +33,8 @@ function Jumper(name, communeId){
 
         rectMode(CORNERS);
         noStroke();
-        fill(map(noise(this.communeId), 0, 1, 100, 250), 255, 255);
-        rect(x-this.fixedSize/2-1, height/4-5, x+this.fixedSize/2, height/3.9);
+        fill(map(noise(this.communeId), 0, 1, 100, 400), 255, 255, 200);
+        rect(x-this.fixedSize/2, height/4-5, x+this.fixedSize/2, height/3.9);
 
         this.mouseOver(x, time);
         pop();
@@ -77,7 +77,7 @@ function Jumper(name, communeId){
         // Show the agency's name and waiting time if the mouse is located in the same column than the ball
         if(dist(mx, my, x, my) < this.height/2){ 
             noStroke();
-            fill(255, 50);
+            fill(map(noise(this.communeId), 0, 1, 100, 400), 255, 255, 50);
             rect(x-this.fixedSize/2, -height/2, x+this.fixedSize/2, height/4);
 
             fill(255);
