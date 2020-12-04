@@ -1,6 +1,6 @@
-let url = "http://localhost:8081/temps-attente/agences"; // API URL
-//let url = "http://localhost:8081/temps-attente/agences/noumea";
-let data = []; // DATA ARRAY
+let url = "http://localhost:8081/temps-attente/agences/"; // API URL
+let data = [];
+let communes = []; // DATA ARRAY
 let jumpers = []; // JUMPERS ARRAY
 
 let bg; // BACKGROUND IMAGE
@@ -10,27 +10,32 @@ var fps = 0; // FPS COUNT
 
 function preload(){
     p5.disableFriendlyErrors = true;
-    loadJSON(url, gotData); // Load API json
+    communes = loadJSON("http://127.0.0.1:8081/communes");
     bg = loadImage("img/space.jpg"); // Retrieve background picture
     logo = loadImage("img/logo_opt.png"); // Retrieve logo picture
 }
 
 function gotData(json){
-    data = json; // Callback assignment
+    for(var i = 0; i < json.length; i++){
+        data.push(json[i]);
+        jumpers.push(new Jumper(json[i].designation));
+    }
+}
+
+function updateData(json){
+    for(var i = 0; i < json.length; i++){
+        data[i] = json[i];
+    }
 }
 
 function setup(){
     createCanvas(windowWidth, windowHeight);
     frameRate(144);
-    
-    var step = width / data.length;
-    x = step/2; // Even the space between the dots
 
-    for(var i = 0; i < data.length; i++){
-        jumpers.push(new Jumper(x, data[i].designation, width/data.length-5));
-        x += step;
+    for(var key in communes){
+        loadJSON(url + communes[key], gotData);
     }
-
+    
     setInterval(updateJson, 60000); // Refresh the json by calling the API every minutes
     setInterval(refreshFPS, 1000);  // Refresh the FPS count every seconds
 }
@@ -48,7 +53,7 @@ function draw(){
 
     // Update jumpers
     for(var i = 0; i < jumpers.length; i++){
-        jumpers[i].show(data[i].realMaxWaitingTimeMs);
+        jumpers[i].show(jumpers[i].fixedSize/2+i*width/jumpers.length, width/jumpers.length, data[i].realMaxWaitingTimeMs);
         jumpers[i].update();
         jumpers[i].jump(data[i].realMaxWaitingTimeMs);
     }
@@ -59,7 +64,9 @@ function windowResized(){ // If window is resized
 }
 
 function updateJson(){
-    loadJSON(url, gotData);
+    for(var key in communes){
+        loadJSON(url + communes[key], updateData);
+    }
 }
 
 function showLogo(){
