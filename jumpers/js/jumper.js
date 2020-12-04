@@ -1,12 +1,13 @@
-function Jumper(x, name){
+function Jumper(x, name, size){
     this.pos = createVector(x, 0); // Position vector (x, y)
     this.vel = createVector(0, 0); // Velocity vector (x, y) 
     this.grav = 0.11; // Gravity setting
-    this.fixedSize = 30; // Size of the ball setting
+    this.fixedSize = size; // Size of the ball setting
     this.width = this.fixedSize; 
     this.height = this.fixedSize;
 
-    this.deformation = this.fixedSize/3; // Deformation when bouncing setting
+    this.throwForce = 7; // Force of bounciness
+    this.deformation = this.fixedSize/2; // Deformation when bouncing setting
     
     this.name = name; // Name of the ball
 
@@ -22,8 +23,8 @@ function Jumper(x, name){
 
         ellipse(this.pos.x, this.pos.y, this.width, this.height); // Show the ball
 
-        this.width -= 3; // Cancel deformation
-        this.height += 3; // Cancel deformation
+        this.width -= 1; // Cancel deformation
+        this.height += 1; // Cancel deformation
         this.width = constrain(this.width, this.fixedSize, this.fixedSize + this.deformation);
         this.height = constrain(this.height, this.fixedSize - this.deformation, this.fixedSize)
 
@@ -45,7 +46,7 @@ function Jumper(x, name){
             this.height -= this.deformation * 1.2;
 
             // Bounce!
-            this.vel.y = -7 - time/600000; 
+            this.vel.y = -this.throwForce - time/600000; 
         }
         if(this.pos.y == -height/2 + this.height/2){ // If the ball hits the ceiling
 
@@ -70,9 +71,9 @@ function Jumper(x, name){
             textSize(16);
             textStyle(BOLD);
             textAlign(CENTER);
-            text(this.name, this.pos.x, height/3 - 60);
+            text(this.name, this.pos.x, height/4+60);
             textStyle(NORMAL);
-            text("Temps d'attente: " + this.formatTime(time), this.pos.x, height/3 - 40);
+            text("Temps d'attente: " + this.formatTime(time), this.pos.x, height/4+40);
         }
         pop();
     }

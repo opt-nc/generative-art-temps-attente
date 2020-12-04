@@ -27,7 +27,7 @@ function setup(){
     x = step/2; // Even the space between the dots
 
     for(var i = 0; i < data.length; i++){
-        jumpers.push(new Jumper(x, data[i].designation));
+        jumpers.push(new Jumper(x, data[i].designation, width/data.length-5));
         x += step;
     }
 
@@ -43,7 +43,8 @@ function draw(){
 
     showDate();
     showLogo();
-    showGroung();
+    showGround();
+    showTip();
 
     // Update jumpers
     for(var i = 0; i < jumpers.length; i++){
@@ -65,12 +66,12 @@ function showLogo(){
     push();
     rectMode(CORNER)
     fill(255);
-    rect(width - logo.width/3 - 30, height/3 - 30, logo.width/2, logo.height/2)
-    image(logo, width - logo.width/3 - 10, height/3, logo.width/3, logo.height/3)
+    rect(width - logo.width/4 - 30, height/2-logo.height/4 - 30, logo.width/3, logo.height/3)
+    image(logo, width - logo.width/4 - 15, height/2-logo.height/4-15, logo.width/4, logo.height/4)
     pop();
 }
 
-function showGroung(){
+function showGround(){
     push();
     rectMode(CORNERS);
     noFill();
@@ -96,6 +97,16 @@ function showDate(){
     text(time, -width/2.25, -height/3);
     textSize(24);
     text("FPS: " + fps, -width/2.25+5, -height/3+50);
+    pop();
+}
+
+function showTip(){
+    push();
+    fill(255);
+    textStyle(BOLD);
+    textSize(32);
+    textAlign(CENTER);
+    text("Passez votre souris sur les agences!", width/2-width/10, height/4+height/8+20);
     pop();
 }
 
