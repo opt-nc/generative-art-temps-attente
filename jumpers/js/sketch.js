@@ -1,6 +1,7 @@
 let url = "http://localhost:8081/temps-attente/agences/"; // API URL
 let data = [];
 let communes = []; // DATA ARRAY
+let communeId = 0;
 let jumpers = []; // JUMPERS ARRAY
 
 let bg; // BACKGROUND IMAGE
@@ -18,8 +19,9 @@ function preload(){
 function gotData(json){
     for(var i = 0; i < json.length; i++){
         data.push(json[i]);
-        jumpers.push(new Jumper(json[i].designation));
+        jumpers.push(new Jumper(json[i].designation, communeId));
     }
+    communeId++;
 }
 
 function updateData(json){
@@ -33,7 +35,7 @@ function setup(){
     frameRate(144);
 
     for(var key in communes){
-        loadJSON(url + communes[key], gotData);
+        loadJSON(url + communes[key], gotData); 
     }
     
     setInterval(updateJson, 60000); // Refresh the json by calling the API every minutes
@@ -48,7 +50,7 @@ function draw(){
 
     showDate();
     showLogo();
-    showGround();
+
     showTip();
 
     // Update jumpers
@@ -64,8 +66,10 @@ function windowResized(){ // If window is resized
 }
 
 function updateJson(){
+    communeId = 1;
     for(var key in communes){
         loadJSON(url + communes[key], updateData);
+        communeId++;
     }
 }
 
@@ -75,15 +79,6 @@ function showLogo(){
     fill(255);
     rect(width - logo.width/4 - 30, height/2-logo.height/4 - 30, logo.width/3, logo.height/3)
     image(logo, width - logo.width/4 - 15, height/2-logo.height/4-15, logo.width/4, logo.height/4)
-    pop();
-}
-
-function showGround(){
-    push();
-    rectMode(CORNERS);
-    noFill();
-    strokeWeight(5)
-    rect(0, height/4, width, height);
     pop();
 }
 

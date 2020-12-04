@@ -1,4 +1,4 @@
-function Jumper(name){
+function Jumper(name, communeId){
     this.y = 0; // Position vector (x, y)
     this.vel = createVector(0, 0); // Velocity vector (x, y) 
     this.grav = 0.11; // Gravity setting
@@ -10,6 +10,7 @@ function Jumper(name){
     this.deformation = this.fixedSize/2; // Deformation when bouncing setting
     
     this.name = name; // Name of the ball
+    this.communeId = communeId;
 
     this.show = function(x, size, time){
         push();
@@ -29,6 +30,11 @@ function Jumper(name){
         this.height += 1; // Cancel deformation
         this.width = constrain(this.width, this.fixedSize, this.fixedSize + this.deformation);
         this.height = constrain(this.height, this.fixedSize - this.deformation, this.fixedSize)
+
+        rectMode(CORNERS);
+        noStroke();
+        fill(map(noise(this.communeId), 0, 1, 100, 250), 255, 255);
+        rect(x-this.fixedSize/2-1, height/4-5, x+this.fixedSize/2, height/3.9);
 
         this.mouseOver(x, time);
         pop();
