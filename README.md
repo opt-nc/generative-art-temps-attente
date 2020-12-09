@@ -29,6 +29,7 @@ docker ps
 
 ## :fireworks: Pour accéder aux visualisations
 
-* <http://127.0.0.1/>
+* <http://127.0.0.1/> (Projet par défaut : Orbit)
 * <http://127.0.0.1/orbit.min.html> (Version allégée de métriques)
 * <http://127.0.0.1/jumpers.html>
+* <http://127.0.0.1/gravity.html>
