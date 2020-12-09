@@ -33,12 +33,10 @@ class Planet{
     show(checked) {
         push();
         colorMode(HSB, 255);
-
-        stroke(0,50);
+        strokeWeight(2);
+        stroke(this.color, 255, 150);
         fill(this.color, 255, 200);
-
         this.showTrail();
-        ellipse(this.pos.x, this.pos.y, this.r*2);
         
         if(checked){
             fill(255);
@@ -74,7 +72,7 @@ class Planet{
 
     showTrail(){
         push();
-        fill(this.color, 255, 150);
+        fill(this.color, 255, 200);
         for(let i = 0; i < this.trail.length; i++){
             ellipse(this.trail[i].x, this.trail[i].y, this.r*2);
         }
