@@ -6,16 +6,19 @@ class Planet{
       this.vel.mult(5);
       this.acc = createVector(0, 0);
       
+      this.color = map(i, 0, nb, 100, 255, true);
+
       this.mass = m;
       this.r = sqrt(this.mass) * 2;
-      this.color = 320 / nb * i; 
-
       this.trail = [];
 
       this.name = name;
     }
     
-    attract(planets, g){
+    attract(planets, g, mass){
+      this.mass = mass;
+      this.r = sqrt(this.mass) * 2;
+
       for(let planet of planets){
         let force = p5.Vector.sub(this.pos, planet.pos);
         let distanceSq = constrain(force.magSq(), 1000, 2000);
@@ -32,10 +35,9 @@ class Planet{
     
     show(checked) {
         push();
-        colorMode(HSB, 255);
-        strokeWeight(2);
-        stroke(this.color, 255, 150);
-        fill(this.color, 255, 200);
+        strokeWeight(0.5);
+        stroke(this.color, 0, 50);
+        fill(this.color, 0, 100);
         this.showTrail();
         
         if(checked){
@@ -56,7 +58,7 @@ class Planet{
 
         this.trail.push(createVector(this.pos.x + this.vel.x, this.pos.y + this.vel.y));
         if(this.trail.length > length){
-            this.trail.splice(0,abs(this.trail.length - length));
+            this.trail.splice(0, abs(this.trail.length - length));
         }
 
         if(this.pos.x <= this.r || this.pos.x >= width - this.r){
@@ -72,9 +74,9 @@ class Planet{
 
     showTrail(){
         push();
-        fill(this.color, 255, 200);
-        for(let i = 0; i < this.trail.length; i++){
-            ellipse(this.trail[i].x, this.trail[i].y, this.r*2);
+        for(let i = this.trail.length-1; i >= 0 ; i--){
+            fill(this.color, 0, 100, map(i, this.trail.length, 0, 255, 50, true));
+            ellipse(this.trail[i].x, this.trail[i].y, map(i, this.trail.length, 0, this.r*2, 5, true));
         }
         pop();
     }

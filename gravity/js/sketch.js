@@ -28,12 +28,13 @@ function setup() {
   }
   
   setInterval(refreshFPS, 1000);
+  setInterval(refreshJson, 30000);
 
   gravity = createSlider(0, 2, 0.3, 0.01);
   gravity.position(50, height - 50);
   gravity.style("width", "150px");
 
-  length = createSlider(0, 200, 30, 1);
+  length = createSlider(5, 200, 35, 1);
   length.position(50, height - 75);
   length.style("width", "150px");
 
@@ -45,10 +46,10 @@ function setup() {
 
 function draw() {
   clear();
-  for(let planet of planets){
-    planet.update(length.value());
-    planet.show(showNames.checked());
-    planet.attract(planets, gravity.value());
+  for(var i = 0; i < planets.length; i++){
+    planets[i].update(length.value());
+    planets[i].show(showNames.checked());
+    planets[i].attract(planets, gravity.value(), map(data[i].realMaxWaitingTimeMs, 0, 150000, 30, 200, true));
   }
 
   showDate();
@@ -83,4 +84,8 @@ function showDate(){
 
 function refreshFPS(){
   fps = parseInt(frameRate()); 
+}
+
+function refreshJson(){
+  loadJSON(url, gotData);
 }
