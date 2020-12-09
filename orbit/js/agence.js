@@ -59,7 +59,7 @@ function Agence(pos, id, name, waitingTime, maxWaitingTime, sliderValue){
         let y = this.radius * sin(this.angle);
         let x = this.radius * cos(this.angle);
 
-        this.showTrails(color, this.size, sliderValue);
+        this.showTrails(this.size, sliderValue);
         this.mouseOver(x, y);
         if(!this.runOnce){;
             this.runOnce = true;
@@ -97,7 +97,7 @@ function Agence(pos, id, name, waitingTime, maxWaitingTime, sliderValue){
         this.color = map(this.waitingTime, 0, this.maxWaitingTime+10, 150, 255, true)+this.random
     }
 
-    this.showTrails = function(color, size, sliderValue){
+    this.showTrails = function(size, sliderValue){
         let length = sliderValue-(14-this.pos);
         if(this.history.length > length){
             this.history.splice(0,abs(this.history.length-length));
