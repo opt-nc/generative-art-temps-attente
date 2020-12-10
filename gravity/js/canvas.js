@@ -30,16 +30,16 @@ function setup() {
   setInterval(refreshFPS, 1000);
   setInterval(refreshJson, 30000);
 
-  gravity = createSlider(0, 2, 0.3, 0.01);
-  gravity.position(50, height - 50);
-  gravity.style("width", "150px");
-
   length = createSlider(5, 200, 35, 1);
-  length.position(50, height - 75);
+  length.position(50, height - 50);
   length.style("width", "150px");
 
+  gravity = createSlider(0, 2, 0.3, 0.01);
+  gravity.position(50, height - 100);
+  gravity.style("width", "150px");
+
   showNames = createCheckbox("Afficher les noms", false);
-  showNames.position(45, height - 100);
+  showNames.position(45, height - 150);
   showNames.style("font-family","Arial");
   showNames.style("color","white");
 }
@@ -53,6 +53,11 @@ function draw() {
   }
 
   showDate();
+
+  fill(255);
+  textSize(16);
+  text("Taille des trainées", 50, height - 55);
+  text("Force d'attraction", 50, height - 105);
 }
 
 function windowResized(){
