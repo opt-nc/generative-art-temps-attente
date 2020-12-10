@@ -43,7 +43,7 @@ function Agence(pos, id, name, waitingTime, maxWaitingTime, sliderValue){
 
         // TRAILS
         this.history.push([x,y]);
-        this.showTrails(color, this.size, sliderValue);
+        this.showTrails(sliderValue);
 
         circle(x, y, this.size);
 
@@ -59,13 +59,13 @@ function Agence(pos, id, name, waitingTime, maxWaitingTime, sliderValue){
         let y = this.radius * sin(this.angle);
         let x = this.radius * cos(this.angle);
 
-        this.showTrails(this.size, sliderValue);
+        this.showTrails(sliderValue);
         this.mouseOver(x, y);
         if(!this.runOnce){;
             this.runOnce = true;
             this.interval = setInterval(() => {
                 this.deleteTrail();
-            }, 500);
+            }, 300);
         }
 
         text(this.history,0,this.y+100);
@@ -97,14 +97,14 @@ function Agence(pos, id, name, waitingTime, maxWaitingTime, sliderValue){
         this.color = map(this.waitingTime, 0, this.maxWaitingTime+10, 150, 255, true)+this.random
     }
 
-    this.showTrails = function(size, sliderValue){
+    this.showTrails = function(sliderValue){
         let length = sliderValue-(14-this.pos);
         if(this.history.length > length){
             this.history.splice(0,abs(this.history.length-length));
         }
 ;
         for(let i = this.history.length-1; i >= 0; i--){
-            circle(this.history[i][0], this.history[i][1], map(i, length, 0, size, 0, true));
+            circle(this.history[i][0], this.history[i][1], map(i, 0, this.history.length, 0, this.size, true));
         };
     }
 
