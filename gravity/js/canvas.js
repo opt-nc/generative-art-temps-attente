@@ -62,6 +62,9 @@ function draw() {
 
 function windowResized(){
   resizeCanvas(windowWidth, windowHeight);
+  showNames.position(45, height - 150);
+  length.position(50, height - 50);
+  gravity.position(50, height - 100);
 }
 
 function showDate(){
