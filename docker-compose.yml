@@ -1,11 +1,11 @@
 version: '3'
 services:
   web-generative-art-opt:
-          image: rastadidi/web-generative-art-temps-attente-opt
+          image: optnc/generative-art-temps-attente
           ports:
                   - 80:80
 
   temps-attente-opt:
-          image: rastadidi/opt-temps-attente-agences-api
+          image: optnc/opt-temps-attente-agences-api
           ports:
                   - 8081:8081
