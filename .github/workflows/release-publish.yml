@@ -28,6 +28,7 @@ jobs:
           tags: |
             type=ref,event=tag,enable=${{ github.ref == 'refs/heads/main' }}
             type=raw,value=latest,enable=${{ steps.release.outputs.new_release_published == 'true' }}
+            type=ref,event=branch,enable=${{ github.ref != 'refs/heads/main' }}
       
       - name: 🐳 Docker build and push
         uses: docker/build-push-action@v3
