@@ -24,7 +24,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: docker.io/${{ github.repository }}
+          images: docker.io/optnc/generative-art-temps-attente
           tags: |
             type=ref,event=tag,enable=${{ github.ref == 'refs/heads/main' }}
             type=raw,value=latest,enable=${{ steps.release.outputs.new_release_published == 'true' }}
