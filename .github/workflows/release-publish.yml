@@ -27,7 +27,7 @@ jobs:
           images: docker.io/${{ github.repository }}
           tags: |
             type=ref,event=tag,enable=${{ github.ref == 'refs/heads/main' }}
-            type=raw,value=latest,enable=${{ steps.release.outputs.new_release_published }}
+            type=raw,value=latest,enable=${{ steps.release.outputs.new_release_published == 'true' }}
       
       - name: 🐳 Docker build and push
         uses: docker/build-push-action@v3
