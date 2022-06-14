@@ -18,7 +18,7 @@ jobs:
       - uses: anchore/scan-action@v3
         id: scan
         with:
-         image: ghcr.io/${{ github.repository }}:latest
+         image: ghcr.io/optnc/generative-art-temps-attente:latest
          fail-build: true
          severity-cutoff: critical
 
@@ -42,7 +42,7 @@ jobs:
             // récupération de l'id de la dernière issue (si existante)
             const existingIssue = (await github.paginate(github.rest.issues.listForRepo.endpoint.merge({
               owner, repo, state: 'open',labels
-            }))).filter(i => i.title.indexOf('\`${{ github.repository }}:latest\`') !== -1)[0];
+            }))).filter(i => i.title.indexOf('\`optnc/generative-art-temps-attente:latest\`') !== -1)[0];
 
             // création ou modification de l'issue
             const body = `:point_right: Vulnéraibilités trouvées :
@@ -55,7 +55,7 @@ jobs:
             } else {
               github.rest.issues.create({
                 owner, repo,
-                title: '🛡️ Vulnéraibilités détectées dans l\'image \`${{ github.repository }}:latest\` 🛡️',
+                title: '🛡️ Vulnéraibilités détectées dans l\'image \`optnc/generative-art-temps-attente:latest\` 🛡️',
                 body,
                 labels
               });
