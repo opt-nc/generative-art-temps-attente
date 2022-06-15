@@ -2,9 +2,9 @@
 [![Test, Release](https://github.com/opt-nc/generative-art-temps-attente/actions/workflows/release-publish.yml/badge.svg)](https://github.com/opt-nc/generative-art-temps-attente/actions/workflows/test-release.yml)
 [![Docker Image](https://img.shields.io/badge/docker-homepage-blue)](https://hub.docker.com/r/optnc/generative-art-temps-attente)
 ![Docker Pulls](https://img.shields.io/docker/pulls/optnc/generative-art-temps-attente)
-![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/optnc/generative-art-temps-attente)
+![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/optnc/generative-art-temps-attente/latest)
 ![Docker Stars](https://img.shields.io/docker/stars/optnc/generative-art-temps-attente)
-![Docker Image Version (latest by date)](https://img.shields.io/docker/v/optnc/generative-art-temps-attente?arch=amd64&sort=date)
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/optnc/generative-art-temps-attente/latest)
 
 # Art Génératif (p5.js)
 
