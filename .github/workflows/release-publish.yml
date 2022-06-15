@@ -30,7 +30,7 @@ jobs:
         with:
           images: docker.io/optnc/generative-art-temps-attente
           tags: |
-            type=ref,event=tag,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=${{ steps.release.outputs.new_release_version }},enable=${{ steps.release.outputs.new_release_published == 'true' }}
             type=raw,value=latest,enable=${{ steps.release.outputs.new_release_published == 'true' }}
             type=ref,event=branch,enable=${{ github.ref != 'refs/heads/main' }}
       
