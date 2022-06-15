@@ -8,4 +8,4 @@ services:
   temps-attente-opt:
           image: optnc/opt-temps-attente-agences-api
           ports:
-                  - 8081:8081
+                  - 8081:8080
