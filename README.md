@@ -29,10 +29,10 @@ docker ps
 
 ### :gear: Ou localement
 ```sh
-git clone https://github.com/adriens/generative-art-temps-attente.git
+git clone https://github.com/opt-nc/generative-art-temps-attente.git
 cd generative-art-temps-attente
 docker-compose up -d
-docker ps
+docker-compose ps
 ```
 
 ## :fireworks: Pour accéder aux visualisations
