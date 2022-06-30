@@ -21,8 +21,8 @@ Ce projet utilise l'[API REST des temps d'attente en agence OPT.nc](https://gith
 ## :rocket: Lancer les visualisations
 
 ```shell
-git clone https://github.com/adriens/generative-art-temps-attente.git
-cd generative-art-temps-attente
+git clone https://github.com/opt-nc/opt-temps-attente-agences-api.git
+opt-temps-attente-agences-api
 docker-compose up -d
 docker ps
 ```
