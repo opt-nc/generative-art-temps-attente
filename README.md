@@ -10,34 +10,30 @@
 
 ## :speech_balloon: Temps d'attente dans les différentes agences de l'OPT NC
 
-Projet de stage étudiant autour de la visualisation des données recueillies par les différentes agences de l'OPT NC.
+Projet autour de la visualisation des données recueillies par les différentes agences de l'OPT NC.
 
-La visualisation est réalisée grâce à la librairie Javascript p5.js <br>
-<https://p5js.org/>
+👉 Tous les détails sur ce [post dédié](https://dev.to/optnc/from-waiting-time-metrics-to-generative-art-2d6d).
 
-Ce projet utilise l'API REST des temps d'attente en agence OPT.nc <br>
-<https://github.com/adriens/opt-temps-attente-agences-api>
+La visualisation est réalisée grâce à la librairie Javascript [`p5.js`](https://p5js.org/).
+
+Ce projet utilise l'[API REST des temps d'attente en agence OPT.nc](https://github.com/opt-nc/opt-temps-attente-agences-api).
 
 ## :rocket: Lancer les visualisations
 
-### :whale: Par Docker
-```
-docker run --name opt-temps-attente-agences-viz -d -p 80:80 optnc/generative-art-temps-attente
-docker run --name opt-temps-attente-agences-api -d -p 8081:8081 optnc/opt-temps-attente-agences-api
-docker ps
-```
-
-### :gear: Ou localement
-```sh
-git clone https://github.com/adriens/generative-art-temps-attente.git
-cd generative-art-temps-attente
+```shell
+git clone https://github.com/opt-nc/opt-temps-attente-agences-api.git
+opt-temps-attente-agences-api
 docker-compose up -d
 docker ps
 ```
 
 ## :fireworks: Pour accéder aux visualisations
 
-* <http://127.0.0.1/> (Projet par défaut : Orbit)
-* <http://127.0.0.1/orbit.min.html> (Version allégée de métriques)
-* <http://127.0.0.1/jumpers.html>
-* <http://127.0.0.1/gravity.html>
+- <http://127.0.0.1/> (Projet par défaut : Orbit)
+- <http://127.0.0.1/orbit.min.html> (Version allégée de métriques)
+- <http://127.0.0.1/jumpers.html>
+- <http://127.0.0.1/gravity.html>
+
+# 🔖 Ressources
+
+- [Article dédié sur DEV.to](https://dev.to/optnc/from-waiting-time-metrics-to-generative-art-2d6d)
