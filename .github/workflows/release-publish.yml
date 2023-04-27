@@ -42,3 +42,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: ✏️ Update Docker Hub Description
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.OPT_DOCKERHUB_LOGIN }}
+          password: ${{ secrets.OPT_DOCKERHUB_PASSWORD }}
+          repository: optnc/generative-art-temps-attente
+          short-description: ${{ github.event.repository.description }}
+          readme-filepath: DOCKERHUB.md
