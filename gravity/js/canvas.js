@@ -1,4 +1,4 @@
-let url = "http://localhost:8081/temps-attente/agences/noumea";
+let url = "http://localhost:8081/agences?commune=noumea";
 let data;
 
 let fps = 0;

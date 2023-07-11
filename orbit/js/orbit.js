@@ -1,6 +1,6 @@
 let data;
-//let url = "http://localhost:8081/temps-attente/agences/";
-let url = "http://localhost:8081/temps-attente/agences/noumea";
+//let url = "http://localhost:8081/agences/";
+let url = "http://localhost:8081/agences?commune=noumea";
 let fps = 0;
 let fpsHistory = [];
 

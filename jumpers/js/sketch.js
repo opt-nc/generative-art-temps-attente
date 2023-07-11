@@ -1,4 +1,4 @@
-let url = "http://localhost:8081/temps-attente/agences/"; // API URL
+let url = "http://localhost:8081/agences?commune="; // API URL
 let data = [];
 let communes = []; // DATA ARRAY
 let communeId = 0;
