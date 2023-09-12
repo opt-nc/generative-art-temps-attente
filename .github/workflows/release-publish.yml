@@ -36,7 +36,7 @@ jobs:
       
       - name: 🐳 Docker build and push
         if: github.ref == 'refs/heads/develop' || steps.release.outputs.new_release_published == 'true'
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: true
