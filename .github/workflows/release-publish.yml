@@ -26,7 +26,7 @@ jobs:
       - name: 📝 Docker meta
         if: github.ref == 'refs/heads/develop' || steps.release.outputs.new_release_published == 'true'
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: docker.io/optnc/generative-art-temps-attente
           tags: |
